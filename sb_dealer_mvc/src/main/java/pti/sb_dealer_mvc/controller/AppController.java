@@ -13,6 +13,7 @@ import pti.sb_dealer_mvc.dto.AdminDto;
 import pti.sb_dealer_mvc.dto.BookingDto;
 import pti.sb_dealer_mvc.dto.CarDto;
 import pti.sb_dealer_mvc.dto.CarListDto;
+import pti.sb_dealer_mvc.dto.EditCarDto;
 import pti.sb_dealer_mvc.service.AppService;
 
 @Controller
@@ -90,6 +91,22 @@ public class AppController {
 		model.addAttribute("adminDto", adminDto);
 
 		return "admin.html";
+	}
+	
+	@PostMapping("/admin/newcar")
+	public String addNewCar(
+				Model model,
+				@RequestParam("type") String type,
+				@RequestParam("price") int price,
+				@RequestParam("active") boolean isActive
+			
+			) {
+		
+		EditCarDto editCarDto = service.addNewCarByAdmin(type, price, isActive);
+		
+		model.addAttribute("editCarDto", editCarDto);
+
+		return "editcar.html";
 	}
 	
 	

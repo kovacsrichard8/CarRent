@@ -115,5 +115,19 @@ public class Database {
 
 	}
 
+	public void saveNewCar(Car newCar) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(newCar);
+		
+		tx.commit();
+		session.close();
+		
+		
+		
+	}
+
 
 }

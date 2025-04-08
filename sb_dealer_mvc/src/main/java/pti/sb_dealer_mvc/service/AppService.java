@@ -13,6 +13,7 @@ import pti.sb_dealer_mvc.dto.AdminDto;
 import pti.sb_dealer_mvc.dto.BookingDto;
 import pti.sb_dealer_mvc.dto.CarDto;
 import pti.sb_dealer_mvc.dto.CarListDto;
+import pti.sb_dealer_mvc.dto.EditCarDto;
 import pti.sb_dealer_mvc.model.Booking;
 import pti.sb_dealer_mvc.model.Car;
 
@@ -191,6 +192,28 @@ public class AppService {
 
 		
 		return adminDto;
+	}
+
+	public EditCarDto addNewCarByAdmin(String type, int price, boolean isActive) {
+		
+		EditCarDto editCarDto = null; 
+		
+		Car newCar = new Car();
+		
+		newCar.setType(type);
+		newCar.setPrice(price);
+		newCar.setActive(isActive);
+		
+		db.saveNewCar(newCar);
+		
+		editCarDto = new EditCarDto(
+				newCar.getId(),
+				newCar.getType(),
+				newCar.getPrice(),
+				newCar.isActive()
+				);
+
+		return editCarDto;
 	}
 
 }

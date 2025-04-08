@@ -29,6 +29,17 @@ table, th, td {
 			</tr>
 	
 	</table>
+	
+	<form action="/admin/newcar" method="post">
+	
+		<input type="text" name="type" placeholder="Car Type"/>
+		<input type="number" name="price" placeholder="Car Price"/>
+		<input type="hidden" name="active" value="false" />
+		<input type="checkbox" name="active" value="true" placeholder="Is active"/>
+			
+		<input type="submit" value="Create"/>	
+			
+	</form>
 
 
 
