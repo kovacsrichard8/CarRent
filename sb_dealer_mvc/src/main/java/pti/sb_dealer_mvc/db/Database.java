@@ -96,5 +96,24 @@ public class Database {
 		
 	}
 
+	public List<Booking> getAllBookings() {
+		
+		List <Booking> bookings = null;
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		SelectionQuery <Booking> query = session.createSelectionQuery(
+					"SELECT b FROM Booking b", Booking.class);
+		
+		bookings = query.getResultList();
+		
+		tx.commit();
+		session.close();
+
+		return bookings;
+
+	}
+
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pti.sb_dealer_mvc.db.Database;
+import pti.sb_dealer_mvc.dto.AdminDto;
 import pti.sb_dealer_mvc.dto.BookingDto;
 import pti.sb_dealer_mvc.dto.CarDto;
 import pti.sb_dealer_mvc.dto.CarListDto;
@@ -142,6 +143,54 @@ public class AppService {
 				);
 
 		return carDto;
+	}
+
+	public AdminDto getAllBookings() {
+		
+		AdminDto adminDto = null;
+		
+		List<BookingDto> bookingDtoList = new ArrayList<>();
+		
+		List<CarDto> carDtoList = new ArrayList<>();
+		
+		List<Car> carsList = db.getAllCars();
+		List<Booking> bookingsList = db.getAllBookings();
+		
+		if(carsList != null && bookingsList != null) {
+			
+			for(int carsIndex = 0; carsIndex < carsList.size(); carsIndex ++) {
+				
+				Car car = carsList.get(carsIndex);
+				
+				CarDto carDto = new CarDto(
+						car.getId(),
+						car.getType(),
+						car.getPrice()
+						);
+				
+				carDtoList.add(carDto);	
+			}
+			
+			for(int bookingsIndex = 0; bookingsIndex < bookingsList.size(); bookingsIndex ++) {
+				
+				Booking booking = bookingsList.get(bookingsIndex);
+				
+				BookingDto bookingDto = new BookingDto(
+						booking.getId(),
+						booking.getStartDate(),
+						booking.getEndDate(),
+						0
+						);
+				
+				bookingDtoList.add(bookingDto);
+			}
+			
+			adminDto = new AdminDto(bookingDtoList, carDtoList);
+
+		}
+
+		
+		return adminDto;
 	}
 
 }
