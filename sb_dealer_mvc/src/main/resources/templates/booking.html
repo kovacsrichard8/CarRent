@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+table, th, td {
+  border: 2px solid black;
+}
+</style>
+
+<body>
+
+	<p>Car rental period including with the payable price</p>
+	
+	<table style="width:50%">
+	
+		<tr>
+			<th>ID</th>
+			<th>Starting Date</th>
+			<th>End Date</th>
+			<th>Total Price</th>
+		</tr>
+		
+		<tr>
+			<td th:text="${bookingDto.getCarId()}"></td>
+			<td th:text="${bookingDto.getStartDate()}"></td>
+			<td th:text="${bookingDto.getEndDate()}"></td>
+			<td th:text="${bookingDto.getFullPrice()}"></td>
+		</tr>
+	
+	</table>
+	
+	<p>Finalize your reservation</p>
+	
+	<form action="/cars/endbooking" method="post">
+		
+		<input type="hidden" name="carid" th:value="${bookingDto.getCarId()}"/>
+		<input type="hidden" name="startdate" th:value="${bookingDto.getStartDate()}"/>
+		<input type="hidden" name="enddate" th:value="${bookingDto.getEndDate()}"/>
+		<input type="text" name="name" placeholder="Name"/>
+		<input type="text" name="email" placeholder="E-mail"/>
+		<input type="text" name="address" placeholder="Address"/>
+		<input type="text" name="phone" placeholder="Phone number"/>
+			
+		<input type="submit" value="Confirm"/>	
+			
+	</form>
+
+
+</body>
+</html>

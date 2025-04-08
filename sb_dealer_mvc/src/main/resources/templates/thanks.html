@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+table, th, td {
+  border: 2px solid black;
+}
+</style>
+
+<body>
+
+	<p>Checkout all details of your car booking</p>
+	
+	<table style="width:50%">
+	
+		<tr>
+			<th>Id</th>
+			<th>Type</th>
+			<th>Price</th>
+		</tr>
+		
+		<tr>
+			<td th:text="${carDto.getId()}"></td>
+			<td th:text="${carDto.getType()}"></td>
+			<td th:text="${carDto.getPrice()}"></td>
+		</tr>
+	
+	</table>
+
+
+</body>
+</html>
