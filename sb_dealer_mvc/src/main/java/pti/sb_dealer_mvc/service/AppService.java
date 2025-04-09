@@ -154,41 +154,7 @@ public class AppService {
 		
 		List<CarDto> carDtoList = new ArrayList<>();
 		
-		List<Car> carsList = db.getAllCars();
-		List<Booking> bookingsList = db.getAllBookings();
-		
-		if(carsList != null && bookingsList != null) {
-			
-			for(int carsIndex = 0; carsIndex < carsList.size(); carsIndex ++) {
-				
-				Car car = carsList.get(carsIndex);
-				
-				CarDto carDto = new CarDto(
-						car.getId(),
-						car.getType(),
-						car.getPrice()
-						);
-				
-				carDtoList.add(carDto);	
-			}
-			
-			for(int bookingsIndex = 0; bookingsIndex < bookingsList.size(); bookingsIndex ++) {
-				
-				Booking booking = bookingsList.get(bookingsIndex);
-				
-				BookingDto bookingDto = new BookingDto(
-						booking.getId(),
-						booking.getStartDate(),
-						booking.getEndDate(),
-						0
-						);
-				
-				bookingDtoList.add(bookingDto);
-			}
-			
-			adminDto = new AdminDto(bookingDtoList, carDtoList);
-
-		}
+		adminDto = getAdminDtoFromLists(adminDto, bookingDtoList, carDtoList);
 
 		
 		return adminDto;
@@ -251,6 +217,12 @@ public class AppService {
 		
 		db.updateCarDetails(editedCar);
 		
+		adminDto = getAdminDtoFromLists(adminDto, bookingDtoList, carDtoList);
+
+		return adminDto;
+	}
+
+	private AdminDto getAdminDtoFromLists(AdminDto adminDto, List<BookingDto> bookingDtoList, List<CarDto> carDtoList) {
 		List<Car> carsList = db.getAllCars();
 		List<Booking> bookingsList = db.getAllBookings();
 		
@@ -286,7 +258,6 @@ public class AppService {
 			adminDto = new AdminDto(bookingDtoList, carDtoList);
 
 		}
-
 		return adminDto;
 	}
 
