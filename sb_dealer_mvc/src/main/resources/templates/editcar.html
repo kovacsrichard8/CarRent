@@ -11,7 +11,7 @@ table, th, td {
 </style>
 <body>
 
-	<p>Check the new car</p>
+	<p>Check the car</p>
 	
 	<table style="width:50%">
 	
@@ -31,6 +31,25 @@ table, th, td {
 		</tr>
 	
 	</table>
+	
+	<br/>
+	
+	<p>Change Car Details</p>
+	
+	<form action="/admin/editcar/finish" method="post">
+		
+		<input type="hidden" name="carid" th:value="${editCarDto.getId()}"/>
+		<input type="text" name="type" placeholder="New Car Type"/>
+		<input type="number" name="price" placeholder="New Car Price"/>
+		<input type="checkbox" name="active" value="true" th:checked="${editCarDto.isActive()}"/>
+		<input type="hidden" name="active" value="false"/>
+		
+			
+		<input type="submit" value="Confirm"/>	
+			
+	</form>
+	
+	
 
 </body>
 </html>

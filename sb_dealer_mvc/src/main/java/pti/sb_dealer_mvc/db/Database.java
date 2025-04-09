@@ -129,5 +129,17 @@ public class Database {
 		
 	}
 
+	public void updateCarDetails(Car editedCar) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.merge(editedCar);
+		
+		tx.commit();
+		session.close();
+		
+	}
+
 
 }

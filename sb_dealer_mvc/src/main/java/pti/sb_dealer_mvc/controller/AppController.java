@@ -109,6 +109,37 @@ public class AppController {
 		return "editcar.html";
 	}
 	
+	@GetMapping("/admin/editcar")
+	public String editCar (
+				Model model,
+				@RequestParam("carid") int carId
+
+			) {
+		
+		EditCarDto editCarDto = service.editCarById(carId);
+		
+		model.addAttribute("editCarDto", editCarDto);
+	
+		return "editcar.html";
+	}
+	
+	@PostMapping("/admin/editcar/finish")
+	public String changeCarDetails(
+				Model model,
+				@RequestParam("carid") int carId,
+				@RequestParam("type") String type,
+				@RequestParam("price") int price,
+				@RequestParam("active") boolean isActive
+			
+			) {
+		
+		AdminDto adminDto = service.changeCarDetailsByParameters(carId, type, price, isActive);
+		
+		model.addAttribute("adminDto", adminDto);
+	
+		return "admin.html";
+	}
+	
 	
 	
 

@@ -30,16 +30,53 @@ table, th, td {
 	
 	</table>
 	
+	<br/>
+	
+	<p>Add new Car</p>
+	
 	<form action="/admin/newcar" method="post">
 	
 		<input type="text" name="type" placeholder="Car Type"/>
 		<input type="number" name="price" placeholder="Car Price"/>
-		<input type="hidden" name="active" value="false" />
-		<input type="checkbox" name="active" value="true" placeholder="Is active"/>
+		<input type="checkbox" name="active" value="true" id="active"/>
 			
 		<input type="submit" value="Create"/>	
 			
 	</form>
+	
+	<br/>
+	
+	<p>Edit Car By ID</p>
+	
+	<form action="/admin/editcar" method="get">
+	
+		<select name="carid">
+				<option>Select a car</option>
+				<option th:each="cars : ${adminDto.getAllCars()}" th:text="${cars.getType()}" th:value="${cars.getId()}"></option>
+		</select>	
+		<input type="submit" value="Edit"/>	
+			
+	</form>
+	
+	<br/>
+	
+	<p>Cars</p>
+	
+	<table style="width:50%">
+	
+		<tr>
+			<th>ID</th>
+			<th>Type</th>
+			<th>Price</th>
+		</tr>
+		
+		<tr th:each="cars : ${adminDto.getAllCars()}">
+				<td th:text="${cars.getId()}"></td>
+				<td th:text="${cars.getType()}"></td>
+				<td th:text="${cars.getPrice()}"></td>
+			</tr>
+	
+	</table>
 
 
 

@@ -216,4 +216,78 @@ public class AppService {
 		return editCarDto;
 	}
 
+	public EditCarDto editCarById(int carId) {
+		
+		EditCarDto editCarDto = null;
+		
+		Car choosedCar = db.getCarById(carId);
+		
+		if(choosedCar != null) {
+			
+			editCarDto = new EditCarDto(
+					choosedCar.getId(),
+					choosedCar.getType(),
+					choosedCar.getPrice(),
+					choosedCar.isActive()
+					);
+		}
+	
+		return editCarDto;
+	}
+
+	public AdminDto changeCarDetailsByParameters(int carId, String type, int price, boolean isActive) {
+		
+		AdminDto adminDto = null;
+		
+		List<BookingDto> bookingDtoList = new ArrayList<>();
+		
+		List<CarDto> carDtoList = new ArrayList<>();
+		
+		Car editedCar = db.getCarById(carId);
+		
+		editedCar.setType(type);
+		editedCar.setPrice(price);
+		editedCar.setActive(isActive);
+		
+		db.updateCarDetails(editedCar);
+		
+		List<Car> carsList = db.getAllCars();
+		List<Booking> bookingsList = db.getAllBookings();
+		
+		if(carsList != null && bookingsList != null) {
+			
+			for(int carsIndex = 0; carsIndex < carsList.size(); carsIndex ++) {
+				
+				Car car = carsList.get(carsIndex);
+				
+				CarDto carDto = new CarDto(
+						car.getId(),
+						car.getType(),
+						car.getPrice()
+						);
+				
+				carDtoList.add(carDto);	
+			}
+			
+			for(int bookingsIndex = 0; bookingsIndex < bookingsList.size(); bookingsIndex ++) {
+				
+				Booking booking = bookingsList.get(bookingsIndex);
+				
+				BookingDto bookingDto = new BookingDto(
+						booking.getId(),
+						booking.getStartDate(),
+						booking.getEndDate(),
+						0
+						);
+				
+				bookingDtoList.add(bookingDto);
+			}
+			
+			adminDto = new AdminDto(bookingDtoList, carDtoList);
+
+		}
+
+		return adminDto;
+	}
+
 }
