@@ -49,6 +49,8 @@ table, th, td {
 			
 	</form>
 	
+	<p th:text="'New Image uploaded to ' + ${editCarDto.getType()}"></p>
+    <img th:src="'data:image/jpeg;base64,' + ${imageFile.getImageBase64()}" width="250"/>
 	
 
 </body>

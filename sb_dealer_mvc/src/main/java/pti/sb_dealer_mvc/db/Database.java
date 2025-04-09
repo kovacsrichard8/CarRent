@@ -141,5 +141,33 @@ public class Database {
 		
 	}
 
+	public void saveCarImage(Car carImageUpload) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(carImageUpload);
+		
+		tx.commit();
+		session.close();
+		
+		
+	}
+
+	public Car getCarImageById(int id) {
+		
+		Car carImage = null;
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		carImage = session.get(Car.class, id);
+		
+		tx.commit();
+		session.close();
+	
+		return carImage;
+	}
+
 
 }

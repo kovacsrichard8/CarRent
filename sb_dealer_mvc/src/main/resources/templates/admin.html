@@ -46,6 +46,22 @@ table, th, td {
 	
 	<br/>
 	
+	<p>Add Image To a Car</p>
+	
+	<form action="/admin/newcar/upload" enctype="multipart/form-data" method="post">
+        
+        <input type="file" name="file" />
+        <select name="carid">
+				<option>Select a car</option>
+				<option th:each="cars : ${adminDto.getAllCars()}" th:text="${cars.getType()}" th:value="${cars.getId()}"></option>
+		</select>
+        
+        
+        <input type="submit" value="Upload" />
+    </form>
+	
+	<br/>
+	
 	<p>Edit Car By ID</p>
 	
 	<form action="/admin/editcar" method="get">

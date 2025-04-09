@@ -1,5 +1,6 @@
 package pti.sb_dealer_mvc.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,23 +9,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import pti.sb_dealer_mvc.db.Database;
 import pti.sb_dealer_mvc.dto.AdminDto;
 import pti.sb_dealer_mvc.dto.BookingDto;
 import pti.sb_dealer_mvc.dto.CarDto;
 import pti.sb_dealer_mvc.dto.CarListDto;
 import pti.sb_dealer_mvc.dto.EditCarDto;
+import pti.sb_dealer_mvc.model.Car;
 import pti.sb_dealer_mvc.service.AppService;
 
 @Controller
 public class AppController {
 	
 	private AppService service;
+	private Database db;
 
 	@Autowired
-	public AppController(AppService service) {
+	public AppController(AppService service, Database db) {
 		super();
 		this.service = service;
+		this.db = db;
 	}
 	
 	@GetMapping("/")
@@ -32,7 +38,7 @@ public class AppController {
 
 		return "index.html";
 	}
-	
+
 	@GetMapping("/cars")
 	public String getAvailableCars (
 				Model model,
@@ -138,6 +144,27 @@ public class AppController {
 		model.addAttribute("adminDto", adminDto);
 	
 		return "admin.html";
+	}
+	
+	@PostMapping("/admin/newcar/upload")
+	public String uploadCarImage(
+				Model model,
+				@RequestParam("file") MultipartFile file,
+				@RequestParam("carid") int carId
+			) throws IOException {
+		
+		byte [] bFile = file.getBytes();
+		Car carImageUpload = db.getCarById(carId);
+		carImageUpload.setImage(bFile);
+		
+		db.saveCarImage(carImageUpload);
+		
+		Car carImageToDownload = new Car();
+		carImageToDownload = db.getCarImageById(carImageUpload.getId());
+		
+		model.addAttribute("carImage", carImageToDownload);
+		
+		return "editcar.html";
 	}
 	
 	
